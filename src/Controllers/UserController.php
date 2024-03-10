@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Kernel\Controller\Controller;
-use App\Kernel\Validator\Validator;
 use App\Kernel\View\View;
 
 class UserController extends Controller
@@ -21,17 +20,18 @@ class UserController extends Controller
 
     }
 
-   public function post():void
+   public function delivery():void
     {
-      $validation = $this->request()->validate([
-         'name' => ['required', 'min:3', 'max:25']
-      ]);
-
-      if (!$validation){
-          dd("valid false" , $this->request()->errors());
-      }
-
-      dd('valid passed');
+        $this->view('delivery');
+       
     }
+
+    public function getAddFlow():void
+    {
+        $this->view('addFlow');
+       
+    }
+
+    
     
 }

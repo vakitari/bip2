@@ -11,56 +11,128 @@
   <title>Document</title>
 
   <style>
-    body, html{
+    body,
+    html {
       height: 100%;
-      font-family: "Dancing Script", cursive;
+      font-family: sans-serif;
       color: #333333;
     }
-   
+
 
     input,
     textarea {
       font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     }
-    .payment{
+    .about-page{
+      margin-top: 50px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+  
+        .contact-info {
+            margin-top: 30px;
+        }
+        .contact-info p {
+            margin-bottom: 10px;
+        }
+    .about-page p{
+      font-size: 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .about-page div p{
+      text-align: center;
+      width: 70%;
+    }
+    .about-page div{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 20px;
+      margin-top: 200px;
+    }
+    .about-page .hel-p{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 30px;
+    }
+
+    .card-pay form div {
+      display: flex;
+      width: 100%;
+    }
+
+    .card-pay form {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .time-delivery {
       margin-top: 20px;
     }
-    .pay-page{
+
+    #but-form-control {
+      border: 2px double;
+    }
+
+    #test p {
+      margin-top: 20px;
+    }
+
+    .payment .btn {
+      border: revert;
+      border-color: green;
+    }
+
+    .payment {
+      width: 40%;
+      margin-top: 20px;
+      font-size: 20px;
+    }
+
+    .pay-page {
       display: flex;
       justify-content: space-between;
     }
 
-    .prof-row{
+    .prof-row {
       display: flex;
       margin-top: 1%;
     }
-    .prof-inf{
+
+    .prof-inf {
       margin-left: 20px;
       margin-top: 2%;
 
     }
 
     .prof-container {
-        position: relative;
-        width: 300px;
-        height: 300px;
-        padding: 0;
-        margin: 0;
+      position: relative;
+      width: 300px;
+      height: 300px;
+      padding: 0;
+      margin: 0;
     }
 
     .overlay {
-        position: absolute;
-        top: 0%;
-        left: 1%;
-        width: 100%;
-        height: 100%;
-    }
-    .overlay img{
       position: absolute;
-      top:75px;
+      top: 0%;
+      left: 1;
+      width: 100%;
+      height: 100%;
+    }
+
+    .overlay img {
+      position: absolute;
+      top: 75px;
       left: 75px;
     }
-    .a_buy{
+
+    .a_buy {
       display: flex;
       align-items: flex-end
     }
@@ -74,7 +146,6 @@
 
     .buyMini {
       display: flex;
-
     }
 
     .buy-div {
@@ -84,7 +155,8 @@
       padding-top: 10px;
       font-size: 20px;
     }
-    .buy-div a{
+
+    .buy-div a {
       font-size: 20px;
 
     }
@@ -115,6 +187,7 @@
 
     .navbar-brand {
       font-size: 50px;
+      font-family: "Dancing Script", cursive;
     }
 
     .prod-home {
@@ -126,10 +199,15 @@
     .p_b {
       display: flex;
       justify-content: center;
+      align-items: center
     }
 
     .p_b a {
       margin: 10px;
+    }
+
+    .pay-page .prod-div {
+      height: 380px;
     }
 
     .prod-div {
@@ -143,6 +221,41 @@
       display: inline-block;
       flex-direction: column;
       border-radius: 15px;
+    }
+
+    .modal {
+    display: none; /* Скрываем модальное окно по умолчанию */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 9% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 50%;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
     }
 
     .prod-div img {
@@ -190,7 +303,7 @@
 
     .d-flex p {
       margin-top: 10px;
-      font-size:20px
+      font-size: 20px
     }
 
     .home-div {
@@ -217,6 +330,7 @@
     .imgReg img {
       width: 100%;
       height: 100%;
+      font-family: "Dancing Script", cursive;
     }
 
     .imgReg::before {
@@ -280,7 +394,7 @@
       <a class="navbar-brand" href="/bas/home">Flower</a>
       <form class="d-flex" role="search">
 
-        <p ><a href="/bas/register" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover me-2">Зарегистрироваться</a></p>
+        <p><a href="/bas/register" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover me-2">Зарегистрироваться</a></p>
         <p><a href="/bas/login" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover me-2">Войти</a></p>
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Поиск</button>
@@ -290,13 +404,12 @@
   <div class="div-nav" style="background-color: #FDE7E7 ;">
     <div style="width: 100%; display: flex; margin-left:15%;font-size:20px">
       <p>Все цветы</p>
-      <p>Доставка</p>
-      <p>Контакты</p>
-      <p>О нас</p>
-    </div > <label style="margin-right:15%;font-size:20px;display:flex;"><a href="/bas/profile" style="color: black;"> профиль</a>  <a href="/bas/basket" style="margin-left: 20px;color: black;"> Корзина</a>  </label>
+      <p><a href="/bas/delivery">Доставка</a></p>
+      <p><a href="/bas/contact">Контакты</a></p>
+      <p><a href="/bas/about">О нас</a></p>
+    </div> <label style="margin-right:15%;font-size:20px;display:flex;"><a href="/bas/profile" style="color: black;"> профиль</a> <a href="/bas/basket" style="margin-left: 20px;color: black;"> Корзина</a> </label>
   </div>
 
   </div>
   <div class="container">
     <div class="row">
-

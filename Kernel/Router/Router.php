@@ -2,11 +2,16 @@
 
 namespace App\Kernel\Router;
 
+use App\Kernel\Auth\AuthInterface;
 use App\Kernel\Controller\Controller;
-use App\Kernel\Http\Request;
+use App\Kernel\DataBase\DataBaseInterface;
+use App\Kernel\Http\RedirectInterface;
+use App\Kernel\Http\RequestInterface;
+use App\Kernel\Session\SessionInterface;
 use App\Kernel\View\View;
+use App\Kernel\View\ViewInterface;
 
-class Router
+class Router implements RouterInterface
 {
     public array $routes = [
         'GET' => [],
@@ -14,8 +19,12 @@ class Router
     ];
 
     public function __construct(
-        private View $view,
-        private Request $request
+        private ViewInterface $view,
+        private RequestInterface $request,
+        private RedirectInterface $redirect,
+        private SessionInterface $session,
+        private DataBaseInterface $dataBase,
+        private AuthInterface $auth
     )
     {
         $this->initRoutes();
@@ -37,6 +46,11 @@ class Router
 
             call_user_func([$controller,'setView'], $this->view);
             call_user_func([$controller,'setRequest'], $this->request);
+            call_user_func([$controller,'setRedirect'], $this->redirect);
+            call_user_func([$controller,'setSession'], $this->session);
+            call_user_func([$controller,'setDataBase'], $this->dataBase);
+            call_user_func([$controller,'setAuth'], $this->auth);
+
             call_user_func([$controller,$action]);
         }
         else
@@ -48,9 +62,9 @@ class Router
 
     }
 
-    public function notFound(): void
+    private function notFound(): void
     {
-        $view = new View();
+        $view = new View($this->session);
 
         $view->page('error');
         exit;

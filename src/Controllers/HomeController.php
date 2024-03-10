@@ -3,12 +3,14 @@
 namespace App\Controllers;
 
 use App\Kernel\Controller\Controller;
+use App\Kernel\Validator\Validator;
 
 class HomeController extends Controller
 {
 
     public function index(): void
     {
+
             $this->view('index');
 
     }
@@ -29,5 +31,14 @@ class HomeController extends Controller
             $this->view('buyFlow');
 
     }
+    public function about(): void
+    {
+            $this->view('about');
 
+    }
+        public function contact(): void
+    {
+            $this->view('contact');
+
+    }
 }

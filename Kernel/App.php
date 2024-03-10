@@ -14,8 +14,6 @@ class App
     public function __construct()
     {
         $this->container = new  Container();
-        session_start();
-
     }
 
     public function run() : void{

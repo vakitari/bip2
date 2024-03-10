@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\Kernel\View\View $view
+ * @var \App\Kernel\Session\Session $session
+ */
 $view ->component('start')
 
 ?>
@@ -9,17 +13,25 @@ $view ->component('start')
                     <h3 class="panel-title">Авторизация</h3>
                 </div>
                 <div class="panel-body">
-                    <form role="form" method="post" action="../index.php">
+                    <form role="form" method="post" action="/bas/log">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Логин</label>
-                            
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" name="email">
+                            <?php if ($session->has('error')) {?>
+                                <ul>
+                                    <?php foreach ($session->getFlash("error") as $error) {?>
+                                        <li>
+                                            <?php echo $error;  ?>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            <?php } ?>
+                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="username" name="username">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Пароль</label>
                             <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
                         </div>
-                        <button type="button" id="button_in" class="btn btn-success">Авторизоваться</button>
+                        <button type="submit" id="button_in" class="btn btn-success">Авторизоваться</button>
                     </form>
                 </div>
             </div>
