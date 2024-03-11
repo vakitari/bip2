@@ -12,9 +12,10 @@ $view ->component('start');
                     <h3 class="panel-title">Регистрация</h3>
                 </div>
                 <div class="panel-body">
-                    <form method="post" action="/bas/reg">
+                    <form method="post" action="/bas/reg" enctype="multipart/form-data">
 
                         <div class="form-group">
+                            <input type="file" name="image">
                             <label>Логин</label>
                             <input type="text" class="form-control"  placeholder="Введите Логин" name="username">
                             <?php if ($session->has('login')) {?>
@@ -40,6 +41,29 @@ $view ->component('start');
                                     <?php } ?>
                                 </ul>
                             <?php } ?>
+                            <label for="exampleInputPassword1">Mail</label>
+                            <input type="email" class="form-control" id="exampleInputPassword1" placeholder="Введите емайл" name="email">
+                            <?php if ($session->has('email')) {?>
+                                <ul>
+                                    <?php foreach ($session->getFlash("email") as $error) {?>
+                                        <li>
+                                            <?php echo $error;  ?>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            <?php } ?>
+                            <label for="exampleInputPassword1">Номер телефона</label>
+                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Введите номер телефона" name="number">
+                            <?php if ($session->has('number')) {?>
+                                <ul>
+                                    <?php foreach ($session->getFlash("number") as $error) {?>
+                                        <li>
+                                            <?php echo $error;  ?>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            <?php } ?>
+
                         </div>
                         <button type="submit" id="button_in" class="btn btn-success mt-3">Зарегистрироваться</button>
                     </form>

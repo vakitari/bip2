@@ -44,7 +44,6 @@ class DataBase implements DataBaseInterface
         $sql = "SELECT * FROM $table $where LIMIT 1";
 
         $stmt = $this->pdo->prepare($sql);
-
         $stmt->execute($condition);
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $result ?: null;

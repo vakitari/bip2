@@ -20,7 +20,7 @@ class Auth implements AuthInterface
     public function attempt(string $username, string $password): bool
     {
 
-        $user = $this->db->first('user',[
+        $user = $this->db->first($this->table(),[
            $this->username() => $username,
         ]);
         if (!$user){
@@ -31,26 +31,41 @@ class Auth implements AuthInterface
         if (!password_verify($password, $user[$this->password()])){
             return false;
         }
-
-        $this->session->set($this->sessionField(), $user);
+        $this->session->set('user_id', $user['id']);
         return true;
 
 
     }
 
-    public function logout($username, $password): void
+    public function logout(): void
     {
-        // TODO: Implement logout() method.
+        $this->session->remove($this->sessionField());
     }
 
-    public function check($username, $password): bool
+    public function check(): bool
     {
-        // TODO: Implement check() method.
+        return $this->session->has($this->sessionField());
     }
 
-    public function user($username, $password): ?array
+    public function user(): ?User
     {
-        // TODO: Implement user() method.
+       if (!$this->check()){
+           return null;
+       }
+       $user =  $this->db->first($this->table(),[
+           'id' => $this->session->get($this->sessionField())
+       ]);
+       if ($user){
+           return new User(
+               $user['id'],
+               $user[$this->username()],
+               $user[$this->password()],
+               $user[$this->email()],
+               $user[$this->number()],
+           );
+       }
+       return null;
+
     }
 
     public function username(): string
@@ -63,6 +78,14 @@ class Auth implements AuthInterface
     {
         return $this->config->get('auth.password', 'pass');
     }
+    public function email(): string
+    {
+        return $this->config->get('auth.email', 'pass');
+    }
+    public function number(): string
+    {
+        return $this->config->get('auth.number', 'pass');
+    }
 
     public function table(): string
     {
@@ -71,7 +94,7 @@ class Auth implements AuthInterface
 
     public function sessionField(): string
     {
-        return $this->config->get('auth.session_field', 'user');
+        return $this->config->get('auth.session_field', 'user_id');
 
     }
 }

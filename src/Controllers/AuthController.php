@@ -13,9 +13,13 @@ class AuthController extends Controller
     }
 
     public function reg(){
+        $file = $this->request()->file('image');
+        dd($file->move('avatars'));
         $validation = $this->request()->validate([
             'username' => ["required", 'min:3', 'max:19'],
-            'password' => ["required", 'min:3']
+            'password' => ["required", 'min:3'],
+            'email' => ["required", 'min:3'],
+            'number' => ["required", 'min:3'],
         ]);
         if(!$validation){
             foreach ($this->request()->errors() as $field => $errors) {
@@ -26,7 +30,9 @@ class AuthController extends Controller
 
         $id = $this->db()->insert('user',[
             'username' => $this->request()->input('username'),
-            'password' => password_hash($this->request()->input('password'), PASSWORD_DEFAULT)
+            'password' => password_hash($this->request()->input('password'), PASSWORD_DEFAULT),
+            'email' => $this->request()->input('email'),
+            'number' => $this->request()->input('number'),
         ]);
         header("location:/bas/login");
     }

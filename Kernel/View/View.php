@@ -2,6 +2,7 @@
 
 namespace App\Kernel\View;
 
+use App\Kernel\Auth\AuthInterface;
 use App\Kernel\DataBase\DataBase;
 use App\Kernel\DataBase\DataBaseInterface;
 use App\Kernel\Exceptions\ViewNotFoundException;
@@ -11,8 +12,9 @@ class View implements ViewInterface
 {
 
     public function __construct(
-        private  SessionInterface $session,
-        private DataBaseInterface $bd
+        private SessionInterface $session,
+        private AuthInterface $auth,
+        private DataBaseInterface $db
     )
     {
 
@@ -47,7 +49,8 @@ class View implements ViewInterface
         return [
             'view' =>$this,
             'session' => $this->session,
-            'bd' => $this->bd,
+            'auth' => $this->auth,
+            'db' => $this->db,
         ];
     }
 }

@@ -27,12 +27,18 @@ class HomeController extends Controller
 
     public function basket(): void
     {
+
             $this->view('basket');
 
     }
     public function buyFlow(): void
     {
-            $this->view('buyFlow');
+            $product = $this->db()->first('product',[
+                'id' =>$this->request()->input('id')
+            ]);
+            $this->view('buyFlow',[
+                'product'=>$product
+            ]);
 
     }
     public function about(): void

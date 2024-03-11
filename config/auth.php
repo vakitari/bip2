@@ -3,6 +3,8 @@ return[
     'table' => 'user',
     'username' => 'username',
     'password' => 'password',
-    'session_field' => 'user',
+    'email' => 'email',
+    'number' => 'number',
+    'session_field' => 'user_id',
 
 ];

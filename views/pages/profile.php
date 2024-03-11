@@ -2,8 +2,10 @@
 /**
  * @var \App\Kernel\View\View $view
  * @var \App\Kernel\Session\Session $session
- * @var \App\Kernel\DataBase\DataBase $bd
+ * @var \App\Kernel\Auth\Auth $auth
+ * @var \App\Kernel\DataBase\DataBase $db
  */
+$user = $auth->user();
 $view->component('start')
 ?>
 <div class="prof-row">
@@ -15,9 +17,9 @@ $view->component('start')
     </div>
   </div>
   <div class="prof-inf">
-    <p>имя: <?php echo $_SESSION["user"]["username"]; ?></p>
-    <p>майл: щгрвапзпршврывфоаррвпфршщ</p>
-    <p>номер: 123123123123123</p>
+    <p>имя: <?php  echo $user->username(); ?></p>
+    <p>майл: <?php  echo $user->email(); ?></p>
+    <p>номер: <?php  echo $user->number(); ?></p>
     <a href="#" id="registerBut" class="btn btn-success">Добавить товар</a>
 
   </div>
@@ -26,16 +28,16 @@ $view->component('start')
   Товары марии
   <hr>
   <?php
-  if (!$bd->first('product', ['user_id' => $session->get('user')['id']])) {  ?>
+//  if (!$db->first('product',['user_id' => $auth->user()['id']])  ) {  ?>
 
     <p>пока что мария не выставляла товар</p>
-    <?php } else {
-    foreach ($bd->get('product', ['user_id' => $session->get('user')['id']]) as $value)  {  ?>
+<!--    --><?php //} else {
+//    foreach ($db->get('product',['user_id' => $auth->user()['id']]) as $value)  {  ?>
 
-      <div><img src="views/components/img/sunflower.png" style="width: 50px;margin-bottom:20px" alt="123"><a href="/bas/buyFlow"> Название: </a><?php echo $value['title']; ?></div>
+      <div><img src="views/components/img/sunflower.png" style="width: 50px;margin-bottom:20px" alt="123"><a href="/bas/buyFlow/?id=<?php //echo $value['id']; ?>"> Название: </a><?php //echo $value['title']; ?></div>
 
-  <?php }
-  }
+<!--  --><?php //}
+//  }
   ?>
 </div>
 
@@ -45,7 +47,7 @@ $view->component('start')
   <div id="registerForm" class="modal-content">
     <div> <span class="close">&times;</span></div>
     <form style="display: flex; flex-direction: column;" method="post" action="/bas/addFlow">
-      <input class="form-control" type="hidden" name="user_id" value="<?php echo $session->get('user')['id']; ?>"> 
+      <input class="form-control" type="hidden" name="user_id" value="<?php echo $auth->user()['id']; ?>">
       <p>название</p>
       <input class="form-control" type="text" name="title">
       <p>цена</p>

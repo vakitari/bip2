@@ -19,7 +19,11 @@ class UserController extends Controller
         $this->view('profile');
 
     }
-
+    public function  logout():void
+    {
+        $this->auth()->logout();
+        header('location:/bas/login');
+    }
    public function delivery():void
     {
         $this->view('delivery');

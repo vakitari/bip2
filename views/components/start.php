@@ -3,6 +3,7 @@
  * @var \App\Kernel\View\View $view
  * @var \App\Kernel\Session\Session $session
  */
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,6 +29,10 @@
     input,
     textarea {
       font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    .panel-body label{
+        margin-top: 10px;
+
     }
     .about-page{
       margin-top: 50px;
@@ -403,10 +408,10 @@
       <a class="navbar-brand" href="/bas/home">Flower</a>
       <form class="d-flex" role="search">
       <?php
-if (!$session->has('user')) {?>
+if (!$session->has('user_id')) {?>
         <p><a href="/bas/register" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover me-2">Зарегистрироваться</a></p>
         <p><a href="/bas/login" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover me-2">Войти</a></p>
-        <?php }?>
+        <?php } else { ?> <a href="/bas/logout" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover me-2">выйти</a> <?php }  ?>
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Поиск</button>
       </form>
@@ -420,7 +425,7 @@ if (!$session->has('user')) {?>
       <p><a href="/bas/about">О нас</a></p>
     </div>
     <?php
-if ($session->has('user')) {?>
+if ($session->has('user_id')) {?>
 
 
       <label style="margin-right:15%;font-size:20px;display:flex;"><a href="/bas/profile" style="color: black;"> профиль</a> <a href="/bas/basket" style="margin-left: 20px;color: black;"> Корзина</a> </label><?php }?>

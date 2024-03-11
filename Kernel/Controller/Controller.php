@@ -10,6 +10,7 @@ use App\Kernel\Http\Request;
 use App\Kernel\Http\RequestInterface;
 use App\Kernel\Session\Session;
 use App\Kernel\Session\SessionInterface;
+use App\Kernel\Storage\StorageInterface;
 use App\Kernel\View\View;
 use App\Kernel\View\ViewInterface;
 
@@ -22,10 +23,11 @@ abstract class Controller
     private SessionInterface $session;
     private DataBaseInterface $dataBase;
     private AuthInterface $auth;
+    private StorageInterface $storage;
 
-    public function view(string $name): void
+    public function view(string $name, array $data = []): void
     {
-        $this->view->page($name);
+        $this->view->page($name,$data);
     }
 
     public function setView(View $view): void
@@ -81,5 +83,15 @@ abstract class Controller
     public function setAuth(AuthInterface $auth): void
     {
         $this->auth = $auth;
+    }
+
+    public function storage(): StorageInterface
+    {
+        return $this->storage;
+    }
+
+    public function setStorage(StorageInterface $storage): void
+    {
+        $this->storage = $storage;
     }
 }

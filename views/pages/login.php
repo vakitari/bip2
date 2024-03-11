@@ -2,9 +2,9 @@
 /**
  * @var \App\Kernel\View\View $view
  * @var \App\Kernel\Session\Session $session
+ * @var \App\Kernel\Auth\Auth $auth
  */
-$view ->component('start')
-
+$view ->component('start');
 ?>
 <div class="text">
         <div class="col-md-6 col-md-offset-3">
