@@ -28,15 +28,23 @@ class AuthController extends Controller
             'username' => $this->request()->input('username'),
             'password' => password_hash($this->request()->input('password'), PASSWORD_DEFAULT)
         ]);
-        dd("пользователь с id $id добавлен");
+        header("location:/bas/login");
     }
     public function login() {
         $this->view('login');
+
     }
     public function log(){
         $login = $this->request()->input('username');
         $password =  $this->request()->input('password');
+        if($this->auth()->attempt($login,$password))
+        {
+        header("location:/bas/home");
+        } else{
+        header("location:/bas/login");
+        $this->session()->set('error', 'Пользователь не найден');
+        }
 
-        dd($this->auth()->attempt($login,$password));
+
     }
 }

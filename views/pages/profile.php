@@ -1,4 +1,9 @@
 <?php
+/**
+ * @var \App\Kernel\View\View $view
+ * @var \App\Kernel\Session\Session $session
+ * @var \App\Kernel\DataBase\DataBase $bd
+ */
 $view->component('start')
 ?>
 <div class="prof-row">
@@ -10,7 +15,7 @@ $view->component('start')
     </div>
   </div>
   <div class="prof-inf">
-    <p>имя: мария</p>
+    <p>имя: <?php echo $_SESSION["user"]["username"]; ?></p>
     <p>майл: щгрвапзпршврывфоаррвпфршщ</p>
     <p>номер: 123123123123123</p>
     <a href="#" id="registerBut" class="btn btn-success">Добавить товар</a>
@@ -21,13 +26,13 @@ $view->component('start')
   Товары марии
   <hr>
   <?php
-  if (false) { ?>
+  if (!$bd->first('product', ['user_id' => $session->get('user')['id']])) {  ?>
 
     <p>пока что мария не выставляла товар</p>
     <?php } else {
-    for ($i = 0; $i < 5; $i++) {  ?>
+    foreach ($bd->get('product', ['user_id' => $session->get('user')['id']]) as $value)  {  ?>
 
-      <div><img src="views/components/img/sunflower.png" style="width: 50px;margin-bottom:20px" alt="123"><a href="/bas/buyFlow"> Название: желтолист</a></div>
+      <div><img src="views/components/img/sunflower.png" style="width: 50px;margin-bottom:20px" alt="123"><a href="/bas/buyFlow"> Название: </a><?php echo $value['title']; ?></div>
 
   <?php }
   }
@@ -39,15 +44,16 @@ $view->component('start')
 
   <div id="registerForm" class="modal-content">
     <div> <span class="close">&times;</span></div>
-    <form style="display: flex; flex-direction: column;" action="">
-      <p>Фото</p>
-      <input class="form-control" type="file">
+    <form style="display: flex; flex-direction: column;" method="post" action="/bas/addFlow">
+      <input class="form-control" type="hidden" name="user_id" value="<?php echo $session->get('user')['id']; ?>"> 
       <p>название</p>
-      <input class="form-control" type="text">
+      <input class="form-control" type="text" name="title">
       <p>цена</p>
-      <input class="form-control" type="text">
+      <input class="form-control" type="text" name="price">
+      <p>Количество</p>
+      <input class="form-control" type="text" name="qty">
       <p>описание</p>
-      <textarea class="form-control" type="text"></textarea>
+      <textarea class="form-control" type="text" name="description"></textarea>
       <button type="submit" class="btn btn-success">Добавить товар</button>
     </form>
 

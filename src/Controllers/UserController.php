@@ -26,10 +26,28 @@ class UserController extends Controller
        
     }
 
-    public function getAddFlow():void
+    public function addFlow():void
     {
-        $this->view('addFlow');
-       
+        $validation = $this->request()->validate([
+            'title' => ["required", 'min:3', 'max:19'],
+            'price' => ["required", 'min:3'],
+            'description' => ["required", 'min:255'],
+            'qty' => ["required", 'max:4']
+        ]);
+        if(!$validation){
+            foreach($this->request()->errors() as $field => $error){
+                $this->session()->set($field, $error);
+            }
+        }
+        $this->db()->insert('product',[
+            'title' => $this->request()->input('title'),
+            'price' => $this->request()->input('price'),
+            'description' => $this->request()->input('description'),
+            'user_id' => $this->request()->input('user_id'),
+            'qty' => $this->request()->input('qty'),
+            
+        ]);
+       header('location:/bas/profile');
     }
 
     

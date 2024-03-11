@@ -18,11 +18,9 @@ $view ->component('start')
                             <label for="exampleInputEmail1">Логин</label>
                             <?php if ($session->has('error')) {?>
                                 <ul>
-                                    <?php foreach ($session->getFlash("error") as $error) {?>
                                         <li>
-                                            <?php echo $error;  ?>
+                                    <?php echo $session->getFlash("error");?>
                                         </li>
-                                    <?php } ?>
                                 </ul>
                             <?php } ?>
                             <input type="text" class="form-control" id="exampleInputEmail1" placeholder="username" name="username">

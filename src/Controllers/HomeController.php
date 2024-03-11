@@ -12,6 +12,10 @@ class HomeController extends Controller
     {
 
             $this->view('index');
+            if ($this->session()->has('user')) {
+            
+
+            }
 
     }
 

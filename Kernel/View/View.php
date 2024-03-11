@@ -2,6 +2,8 @@
 
 namespace App\Kernel\View;
 
+use App\Kernel\DataBase\DataBase;
+use App\Kernel\DataBase\DataBaseInterface;
 use App\Kernel\Exceptions\ViewNotFoundException;
 use App\Kernel\Session\SessionInterface;
 
@@ -9,7 +11,8 @@ class View implements ViewInterface
 {
 
     public function __construct(
-        private  SessionInterface $session
+        private  SessionInterface $session,
+        private DataBaseInterface $bd
     )
     {
 
@@ -35,6 +38,7 @@ class View implements ViewInterface
             echo "Компонент $name не найден";
             return;
         }
+        extract($this->defaultData());
         include_once $componentPath;
 
     }
@@ -43,6 +47,7 @@ class View implements ViewInterface
         return [
             'view' =>$this,
             'session' => $this->session,
+            'bd' => $this->bd,
         ];
     }
 }

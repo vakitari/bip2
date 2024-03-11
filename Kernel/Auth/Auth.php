@@ -23,16 +23,16 @@ class Auth implements AuthInterface
         $user = $this->db->first('user',[
            $this->username() => $username,
         ]);
-
         if (!$user){
+
             return false;
         }
+
         if (!password_verify($password, $user[$this->password()])){
             return false;
         }
 
         $this->session->set($this->sessionField(), $user);
-
         return true;
 
 
@@ -71,7 +71,7 @@ class Auth implements AuthInterface
 
     public function sessionField(): string
     {
-        return $this->config->get('auth.session_field', 'id');
+        return $this->config->get('auth.session_field', 'user');
 
     }
 }

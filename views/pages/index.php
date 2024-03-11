@@ -1,5 +1,10 @@
 <?php
-$view->component('start')
+/**
+ * @var \App\Kernel\View\View $view
+ * @var \App\Kernel\Session\Session $session
+ * @var \App\Kernel\DataBase\DataBase $bd
+ */
+$view->component('start');
 
 ?>
 
@@ -25,27 +30,29 @@ $view->component('start')
 </div>
 <div class="content-home">
     <div class="prod-home">
-        <?php
-        for ($i = 0; $i < 6; $i++) {
+    <?php
+  if (!$bd->getAll('product')) {  ?>
 
-        ?>
+    <p>пока что нет товаров</p>
+    <?php } else {
+    foreach ($bd->getAll('product') as $value)  {  ?>
+
             <div class="prod-div">
                 <img src="views/components/img/Rectangle.png" alt="12312">
-                <p>название: жопоглазки</p>
-                <p>цена:10000</p>
-                <p>кол-во цветов: 10</p>
-                <p class="pp">Описание:
-                <p>Эти прекрасные цветы расцветают в самую красивую пору, весной когда еще не весь снег растаял, прекрасные бутоны этого цветка распускаются и все кайфуют</p>
+                <p>название: <?php echo $value['title']; ?></p>
+                <p>цена:<?php echo $value['price']; ?></p>
+                <p>кол-во цветов: <?php echo $value['qty']; ?></p>
+                <p class="pp">Описание: <button id="desc" class="jopa btn"> Развернуть</button>
+                <p class="description" style="display: none;"><?php echo $value['description']; ?></p>
                 </p>
                 <div class="p_b">
                     <a href="/bas/buyFlow" class="btn btn-outline-success" type="button" value="купить">купить </a>
-                    <button class="registerButton btn btn-outline-success" style="height: 38px;" type="button" value="Подробнее">Подробнее</button>
+                    <button class="registerButton btn btn-outline-success" style="height: 38px;" type="button" value="" >Подробнее</button>
                 </div>
             </div>
 
-        <?php
-        }
-        ?>
+        <?php } ?>
+         <?php } ?>
         <!-- модальное окно -->
         <div id="registerModal" class="modal">
             <!-- Форма регистрации -->
@@ -84,16 +91,28 @@ $view->component('start')
     var registerButtons = document.getElementsByClassName("registerButton");
     var registerModal = document.getElementById("registerModal");
     var closeButton = document.getElementsByClassName("close")[0];
-
+    var buttons = document.querySelectorAll(".jopa");
+    var description = document.getElementsByClassName('description')
+    var isExpanded = false;
     for (var i = 0; i < registerButtons.length; i++) {
         registerButtons[i].onclick = function() {
         registerModal.style.display = "block";
-        console.log(13);
 
     };
     }
-    // Когда пользователь нажимает на кнопку, открываем модальное окно
-    
+    for (var i = 0; i < buttons.length; i++) {
+     buttons.onclick = function() {
+    var description = this.nextElementSibling.nextElementSibling;
+
+    description.style.display = (description.style.display === 'none') ? 'block' : 'none';
+
+    if (description.style.display === 'block') {
+      this.innerText = "Свернуть";
+    } else {
+      this.innerText = "Развернуть";
+    }
+  };
+}
 
     // Когда пользователь нажимает на кнопку закрытия, закрываем модальное окно
     closeButton.onclick = function() {
@@ -106,6 +125,8 @@ $view->component('start')
             registerModal.style.display = "none";
         }
     }
+    
+
 </script>
 <?php
 $view->component('end')

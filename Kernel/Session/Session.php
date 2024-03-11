@@ -10,7 +10,6 @@ class Session implements SessionInterface
     }
     public function set(string $key, $value): void
     {
-
         $_SESSION[$key] = $value;
     }
 

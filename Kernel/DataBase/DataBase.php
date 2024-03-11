@@ -49,6 +49,34 @@ class DataBase implements DataBaseInterface
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $result ?: null;
     }
+
+    public function get(string $table, array $condition = []): ?array
+    {
+        $where = '';
+        if (count($condition) > 0){
+            $where = 'WHERE '.implode(' AND ', array_map(fn ($field) => "$field = :$field", array_keys($condition)));
+        }
+
+        $sql = "SELECT * FROM $table $where ";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute($condition);
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $result ?: null;
+    }
+
+    public function getAll(string $table): ?array
+    {
+       
+        $sql = "SELECT * FROM $table ";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute();
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $result ?: null;
+    }
     private function connect():void{
 
         $driver  = $this->config->get('database.driver');

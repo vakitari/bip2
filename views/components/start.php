@@ -1,3 +1,9 @@
+<?php 
+/**
+ * @var \App\Kernel\View\View $view
+ * @var \App\Kernel\Session\Session $session
+ */
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -194,6 +200,9 @@
       display: inline-block;
       margin-top: 20px;
       margin-left: 50px;
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
     }
 
     .p_b {
@@ -393,9 +402,11 @@
     <div class="container-fluid">
       <a class="navbar-brand" href="/bas/home">Flower</a>
       <form class="d-flex" role="search">
-
+      <?php
+if (!$session->has('user')) {?>
         <p><a href="/bas/register" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover me-2">Зарегистрироваться</a></p>
         <p><a href="/bas/login" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover me-2">Войти</a></p>
+        <?php }?>
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Поиск</button>
       </form>
@@ -407,7 +418,12 @@
       <p><a href="/bas/delivery">Доставка</a></p>
       <p><a href="/bas/contact">Контакты</a></p>
       <p><a href="/bas/about">О нас</a></p>
-    </div> <label style="margin-right:15%;font-size:20px;display:flex;"><a href="/bas/profile" style="color: black;"> профиль</a> <a href="/bas/basket" style="margin-left: 20px;color: black;"> Корзина</a> </label>
+    </div>
+    <?php
+if ($session->has('user')) {?>
+
+
+      <label style="margin-right:15%;font-size:20px;display:flex;"><a href="/bas/profile" style="color: black;"> профиль</a> <a href="/bas/basket" style="margin-left: 20px;color: black;"> Корзина</a> </label><?php }?>
   </div>
 
   </div>
