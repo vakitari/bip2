@@ -1,66 +1,34 @@
 <?php
+/**
+ * @var \App\Kernel\View\View $view
+ * @var \App\Kernel\Session\Session $session
+ * @var \App\Kernel\DataBase\DataBase $db
+ */
+$user = $auth->user();
 $view->component('start')
 ?>
-<!DOCTYPE html>
-<html>
-
-<head>
-  <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      padding: 15px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-  </style>
-</head>
-
-<body>
 
   <h2>История заказов</h2>
 
   <table>
-    <tr>
-      <th>Заказчик</th>
-      <th>Товар</th>
-      <th>Цена</th>
-      <th></th>
-    </tr>
-    <tr>
-      <td>Alfreds Futterkiste</td>
-      <td>Maria Anders</td>
-      <td>Germany</td>
-    </tr>
-    <tr>
-      <td>Centro comercial Moctezuma</td>
-      <td>Francisco Chang</td>
-      <td>Mexico</td>
-    </tr>
-    <?php for ($i = 0; $i < 3; $i++) { ?>
+    
+    <?php foreach ($db->get('delivery',['user_id' => $user->id()]) as $value) {  ?>
 
       <tr>
-        <td>Имя пользования <?=$i ?></td>
-        <td>Жопоглазки</td>
-        <td>10000</td>
-        <td><a href="" class="btn btn-danger">Отменить заказ</a></td>
+        <td>Имя пользования <?= $user->username() ?></td>
+        <td>Название <?= $db->first('product', ['id' => $value['product_id']])['title']; ?></td>
+        <td>Количество <?= $value['qtyBuy'] ?> </td>
+        <td>цена <?= $value['fPrice'] ?> </td>
+        <td><?php if ($value['dost'] == 1) {
+          echo "самовывоз";
+        } else echo "Доставка по адресу ". $value['dost'] ?> </td>
+        <td><a href="/bas/deleteDel/?id=<?php echo $value['id']; ?>" class="btn btn-danger">Отменить заказ</a></td>
       </tr>
     <?php } ?>
 
 
   </table>
 
-</body>
-
-</html>
 <?php
 $view->component('end')
 ?>

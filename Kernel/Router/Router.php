@@ -78,7 +78,7 @@ class Router implements RouterInterface
 
     private function notFound(): void
     {
-        $view = new View($this->session);
+        $view = new ViewInterface($this->session);
 
         $view->page('error');
         exit;

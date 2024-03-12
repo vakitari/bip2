@@ -21,14 +21,18 @@ return[
     Route::get('/bas/logout', [UserController::class, 'logout']),
     Route::post('/bas/addFlow', [UserController::class, 'addFlow']),
     Route::get('/bas/delivery', [UserController::class, 'delivery']),
+    Route::post('/bas/deliveryBuy', [UserController::class, 'deliveryBuy']),
+    Route::get('/bas/deleteDel/', [UserController::class, 'deleteDel']),
+
 
 
     
-
+    
     Route::get('/bas/home', [HomeController::class, 'index']),
     Route::get('/bas/contact', [HomeController::class, 'contact']),
     Route::get('/bas/about', [HomeController::class, 'about']),
-    Route::get('/bas/description', [HomeController::class, 'description']),
-    Route::get('/bas/basket', [HomeController::class, 'basket']),
+    Route::get('/bas/description/', [HomeController::class, 'description']),
+    Route::get('/bas/basket/', [HomeController::class, 'basket']),
+    Route::get('/bas/basket', [HomeController::class, 'basket2']),
     Route::get('/bas/buyFlow/', [HomeController::class, 'buyFlow']),
 ];

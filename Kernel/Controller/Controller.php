@@ -4,14 +4,10 @@ namespace App\Kernel\Controller;
 
 use App\Kernel\Auth\AuthInterface;
 use App\Kernel\DataBase\DataBaseInterface;
-use App\Kernel\Http\Redirect;
 use App\Kernel\Http\RedirectInterface;
-use App\Kernel\Http\Request;
 use App\Kernel\Http\RequestInterface;
-use App\Kernel\Session\Session;
 use App\Kernel\Session\SessionInterface;
 use App\Kernel\Storage\StorageInterface;
-use App\Kernel\View\View;
 use App\Kernel\View\ViewInterface;
 
 abstract class Controller
@@ -30,7 +26,7 @@ abstract class Controller
         $this->view->page($name,$data);
     }
 
-    public function setView(View $view): void
+    public function setView(ViewInterface $view): void
     {
         $this->view = $view;
     }

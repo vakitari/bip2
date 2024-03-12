@@ -5,53 +5,60 @@
  * @var \App\Kernel\Auth\Auth $auth
  * @var \App\Kernel\DataBase\DataBase $db
  */
-
+$user = $auth->user();
+ $product;
 $view->component('start');
 ?>
 <div class="pay-page">
     <div class="payment">
+    <form action="/bas/deliveryBuy" method="post">
+
         <p>Доставка или заберете сами?</p>
-        <button id="button1" class="btn">Самовывоз</button>
-        <button id="button2" class="btn">Доставка</button>
+        <button id="button1" type="button" class="btn">Самовывоз</button>
+        <button id="button2" type="button" class="btn">Доставка</button>
         <div id="test" style="display: none;">
             <p>Тогда укажите адрес доставки:</p>
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm">Адрес</span>
-                <input style="    border-color: cadetblue;" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                <input style="border-color: cadetblue;" name="dost" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
             </div>
         </div>
         <div class="time-delivery">
             <p>Время доставки: 20:21</p>
         </div>
+        <input type="text" placeholder="Количество" name="qtyBuy" class="input-group" oninput="calculatePrice()">
         <div class="card-pay">
             <p>Заполните данные карты</p>
-            <form action="">
                 <input type="text" id="myInput" placeholder="Номер карты" class="input-group">
                 <input type="text" placeholder="Имя владельца" class="input-group">
                 <div>
                     <input type="text" id="myInput3" placeholder="Срок действия" class="input-group">
                     <input type="text" id="myInput4" placeholder="CVV/CVC" class="input-group">
                 </div>
-            </form>
         </div>
         <p style="margin-top: 20px;">доставка: бесплатная</p>
-        <p>Итого: 10000р</p>
-        <a href="" class="btn btn-success">Оплатить</a>
+        <input type="hidden" name="finP">
+        Итого:<p id="finPrice"></p>
+        <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>"  >
+        <input type="hidden" name="user_id" value="<?php echo $user->id(); ?>">
+        <button type="submit" >Оплатить</button>
+        </form>
 
     </div>
 
 
     <div class="prod-div">
-        <img src="views/components/img/Rectangle.png" alt="12312">
-        <p>название: жопоглазки</p>
-        <p>цена:10000</p>
-        <p>кол-во цветов: 10</p>
+        <img src="<?php echo $storage->url($product['avatar']); ?>" alt="12312">
+        <p>название: <?php echo $product['title'] ?></p>
+        <p>цена:<?php echo $product['price'] ?></p>
+        <p>кол-во цветов: <?php echo $product['qty'] ?></p>
     </div>
 
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
+
 
         $("#button1").click(function() {
             var test = document.getElementById("test");
@@ -77,8 +84,7 @@ $view->component('start');
 
             test.style.display = (test.style.display === 'none') ? 'block' : 'none';
         });
-
-
+         
         document.getElementById('myInput').addEventListener('input', function() {
             if (this.value.length == 4 || this.value.length == 9 || this.value.length == 14) {
                 this.value += ' ';
@@ -119,6 +125,24 @@ $view->component('start');
             }
         });
     });
+    
+    function calculatePrice() {
+            var qtyBuy = document.querySelector('[name="qtyBuy"]').value;
+            var finPrice = document.querySelector('#finPrice');
+            var finP = document.querySelector('[name="finP"]');
+            if (qtyBuy > <?php echo $product['qty'] ?>) {
+            alert('Число не может быть больше ' + <?php echo $product['qty'] ?>);
+            document.querySelector('[name="qtyBuy"]').value = <?php echo $product['qty'] ?>;
+            }
+            if (qtyBuy === '') {
+                finP.value = '';
+                finPrice.textContent = '';
+            } else {
+                finP.value = qtyBuy * <?php echo $product['price'] ?>;
+                finPrice.textContent  = qtyBuy * <?php echo $product['price'] ?>;
+
+            }
+        }
 </script>
 <?php
 $view->component('end')

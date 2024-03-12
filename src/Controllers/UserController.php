@@ -13,6 +13,14 @@ class UserController extends Controller
         $this->view('register');
 
     }
+    
+    public function deleteDel():void
+    {
+        $this->db()->del('delivery', ['id' => $this->request()->input('id')]);
+
+        header('location:/bas/delivery');
+
+    }
 
     public function profile():void
     {
@@ -30,8 +38,26 @@ class UserController extends Controller
        
     }
 
+    public function deliveryBuy():void
+    {
+            if($this->request()->input('dost') == null)
+            $dost = 1;
+            else
+            $dost = $this->request()->input('dost');
+        $this->db()->insert('delivery',[
+            'user_id' => $this->request()->input('user_id'),
+            'product_id' => $this->request()->input('product_id'),
+            'qtyBuy' => $this->request()->input('qtyBuy'),
+            'fPrice' => $this->request()->input('finP'),
+            'dost' => $dost,
+        ]);
+        header("location:/bas/delivery");
+    }
+
     public function addFlow():void
     {
+        $file = $this->request()->file('avatar');
+        $filePath = $file->move('avatars');
         $validation = $this->request()->validate([
             'title' => ["required", 'min:3', 'max:19'],
             'price' => ["required", 'min:3'],
@@ -49,6 +75,7 @@ class UserController extends Controller
             'description' => $this->request()->input('description'),
             'user_id' => $this->request()->input('user_id'),
             'qty' => $this->request()->input('qty'),
+            'avatar' => $filePath,
             
         ]);
        header('location:/bas/profile');

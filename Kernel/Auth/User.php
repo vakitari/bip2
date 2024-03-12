@@ -10,13 +10,15 @@ class User
         private string $password,
         private string $email,
         private string $number,
+        private string $avatar,
+
     )
     {
     }
 
     public function id(): int
     {
-        return $this->id();
+        return $this->id;
     }
 
     public function username(): string
@@ -37,5 +39,10 @@ class User
     public function number(): string
     {
         return $this->number;
+    }
+
+    public function avatar(): string
+    {
+        return $this->avatar;
     }
 }

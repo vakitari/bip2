@@ -30,6 +30,21 @@
     textarea {
       font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
     .panel-body label{
         margin-top: 10px;
 
@@ -221,7 +236,7 @@
     }
 
     .pay-page .prod-div {
-      height: 380px;
+      height: fit-content;
     }
 
     .prod-div {
@@ -419,7 +434,7 @@ if (!$session->has('user_id')) {?>
   </nav>
   <div class="div-nav" style="background-color: #FDE7E7 ;">
     <div style="width: 100%; display: flex; margin-left:15%;font-size:20px">
-      <p>Все цветы</p>
+      <p><a href="/bas/home">Все цветы</a></p>
       <p><a href="/bas/delivery">Доставка</a></p>
       <p><a href="/bas/contact">Контакты</a></p>
       <p><a href="/bas/about">О нас</a></p>

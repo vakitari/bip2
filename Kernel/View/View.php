@@ -7,6 +7,7 @@ use App\Kernel\DataBase\DataBase;
 use App\Kernel\DataBase\DataBaseInterface;
 use App\Kernel\Exceptions\ViewNotFoundException;
 use App\Kernel\Session\SessionInterface;
+use App\Kernel\Storage\StorageInterface;
 
 class View implements ViewInterface
 {
@@ -14,13 +15,14 @@ class View implements ViewInterface
     public function __construct(
         private SessionInterface $session,
         private AuthInterface $auth,
-        private DataBaseInterface $db
+        private DataBaseInterface $db,
+        private StorageInterface $storage
     )
     {
 
     }
 
-    public function page(string $name): void
+    public function page(string $name,$data = []): void
     {
 
 
@@ -28,7 +30,7 @@ class View implements ViewInterface
         if (!file_exists($viewPath)) {
             throw new ViewNotFoundException("страница $name не найдена");
         }
-        extract($this->defaultData());
+        extract(array_merge($this->defaultData(), $data));
          include_once  $viewPath;
 
     }
@@ -51,6 +53,7 @@ class View implements ViewInterface
             'session' => $this->session,
             'auth' => $this->auth,
             'db' => $this->db,
+            'storage' => $this->storage,
         ];
     }
 }

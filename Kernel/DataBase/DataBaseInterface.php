@@ -10,4 +10,6 @@ Interface DataBaseInterface
     public function  first(string $table, array $condition = []): ?array;
     public function get(string $table, array $condition = []): ?array;
 
+    public function del(string $table, array $condition = []):void;
+
 }

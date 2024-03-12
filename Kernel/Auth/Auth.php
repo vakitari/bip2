@@ -62,6 +62,7 @@ class Auth implements AuthInterface
                $user[$this->password()],
                $user[$this->email()],
                $user[$this->number()],
+               $user['avatar'],
            );
        }
        return null;
@@ -91,6 +92,8 @@ class Auth implements AuthInterface
     {
         return $this->config->get('auth.table', 'table');
     }
+
+    
 
     public function sessionField(): string
     {

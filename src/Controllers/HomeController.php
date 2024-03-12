@@ -21,12 +21,32 @@ class HomeController extends Controller
 
     public function description(): void
     {
-            $this->view('description');
+        $product = $this->db()->first('product', [
+                'id' => $this->request()->input('id')
+        ]);
+
+            $this->view('description',[
+                'product' => $product
+            ]);
+
+    }
+    public function basket2(): void
+    {
+
+
+            $this->view('basket');
 
     }
 
     public function basket(): void
     {
+
+        $productId = $this->request()->input('id');
+        $userId = $this->auth()->user()->id(); 
+        $this->db()->insert('basket', [
+                'product_id' => $productId,
+                'user_id' => $userId,
+        ]);
 
             $this->view('basket');
 

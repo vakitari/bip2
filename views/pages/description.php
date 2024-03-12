@@ -1,9 +1,10 @@
 <?php
 $view->component('start');
+
 ?>
 <div class="buy-div">
         <div class="buyMini">
-                <img src="views/components/img/Rectangle.png" alt="12312">
+                <img src="<?php echo $storage->url($product['avatar']); ?>" alt="12312">
                 <div class="buyInf">
                         <p> Время доставки: по городу 40мин, за городом 1ч 20мин~ </p>
                         <p> Оплата: на месте картой или наличными</p>
@@ -11,15 +12,15 @@ $view->component('start');
                 </div>
         </div>
         <div>
-                <p>название: жопоглазки</p>
-                <p>цена:10000</p>
-                <p>кол-во цветов: 10</p>
+                <p>название: <?php echo $product['title'] ?></p>
+                <p>цена:<?php echo $product['price'] ?></p>
+                <p>кол-во цветов: <?php echo $product['qty'] ?></p>
                 <p id="pp">Описание:
-                <p>Эти прекрасные цветы расцветают в самую красивую пору, весной когда еще не весь снег расстаял, прекрастные бутоны этого цветка распускаются и все кайфуют</p>
+                <p><?php echo $product['description'] ?></p>
                 </p>
                 <div class="p_b">
-                        <a href="/bas/buyFlow" class="btn btn-outline-success" type="button" value="купить">купить </a>
-                        <a href="/bas/basket" class="btn btn-outline-success" type="button" value="Подробнее">В корзину</a>
+                        <a href="/bas/buyFlow/" class="btn btn-outline-success" type="button" value="купить">купить </a>
+                        <a href="/bas/basket/?id=<?php echo $product['id']?>" class="btn btn-outline-success" type="button" value="Подробнее">В корзину</a>
                 </div>
         </div>
 </div>
