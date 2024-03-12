@@ -11,6 +11,7 @@ class User
         private string $email,
         private string $number,
         private string $avatar,
+        private string $role,
 
     )
     {
@@ -44,5 +45,9 @@ class User
     public function avatar(): string
     {
         return $this->avatar;
+    }
+    public function role(): string
+    {
+        return $this->role;
     }
 }

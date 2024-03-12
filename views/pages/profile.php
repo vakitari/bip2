@@ -36,7 +36,7 @@ $view->component('start')
     <?php } else {
     foreach ($db->get('product', ['user_id' => $user->id()]) as $value) {   ?>
 
-      <div><img src="<?php echo $storage->url($value['avatar']); ?>" style="width: 50px;margin-bottom:20px" alt="123"><a href="/bas/buyFlow/?id=<?php echo $value['id'];
+      <div><img src="<?php echo $storage->url($value['avatar']); ?>" style="height: 50px;margin-bottom:20px" alt="123"><a href="/bas/buyFlow/?id=<?php echo $value['id'];
                                                                                                                                     ?>"> Название: </a><?php echo $value['title'];
                                                                                                                                                         ?></div>
 

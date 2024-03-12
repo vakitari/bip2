@@ -63,6 +63,7 @@ class Auth implements AuthInterface
                $user[$this->email()],
                $user[$this->number()],
                $user['avatar'],
+               $user[$this->role()],
            );
        }
        return null;
@@ -86,6 +87,11 @@ class Auth implements AuthInterface
     public function number(): string
     {
         return $this->config->get('auth.number', 'pass');
+    }
+
+    public function role(): string
+    {
+        return $this->config->get('auth.role', 'role');
     }
 
     public function table(): string

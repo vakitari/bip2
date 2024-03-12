@@ -1,8 +1,11 @@
-<?php 
+<?php
 /**
  * @var \App\Kernel\View\View $view
  * @var \App\Kernel\Session\Session $session
+ * @var \App\Kernel\DataBase\DataBase $db
+ * @var \App\Kernel\Auth\Auth $auth
  */
+$user = $auth->user();
 
 ?>
 <!DOCTYPE html>
@@ -151,7 +154,19 @@
       width: 100%;
       height: 100%;
     }
+    a{
+        color: #333; /* Цвет текста */
+        text-decoration: none; /* Убираем подчеркивание */
+        border-radius: 5px; /* Скругление углов */
+        transition: background-color 0.3s ease; /* Плавное изменение цвета фона */
+    }
+    a:hover{
+        background-color: #e0e0e0;
+    }
 
+    img{
+        height: 365px;
+    }
     .overlay img {
       position: absolute;
       top: 75px;
@@ -422,28 +437,30 @@
     <div class="container-fluid">
       <a class="navbar-brand" href="/bas/home">Flower</a>
       <form class="d-flex" role="search">
-      <?php
-if (!$session->has('user_id')) {?>
+      <?php if (!$session->has('user_id')) {?>
         <p><a href="/bas/register" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover me-2">Зарегистрироваться</a></p>
         <p><a href="/bas/login" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover me-2">Войти</a></p>
-        <?php } else { ?> <a href="/bas/logout" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover me-2">выйти</a> <?php }  ?>
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Поиск</button>
+        <?php } else { if ($user->role() == 1) {?>  <a href="/bas/admin" style="margin-right: 100px" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover me-2">админка</a><?php } ?>
+          <a href="/bas/logout" style="margin-right: 100px" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover me-2">выйти</a> <?php }  ?>
+
       </form>
     </div>
   </nav>
   <div class="div-nav" style="background-color: #FDE7E7 ;">
     <div style="width: 100%; display: flex; margin-left:15%;font-size:20px">
       <p><a href="/bas/home">Все цветы</a></p>
+        <?php if ($session->has('user_id')) {?>
       <p><a href="/bas/delivery">Доставка</a></p>
+        <?php }  ?>
       <p><a href="/bas/contact">Контакты</a></p>
       <p><a href="/bas/about">О нас</a></p>
     </div>
     <?php
 if ($session->has('user_id')) {?>
-
-
-      <label style="margin-right:15%;font-size:20px;display:flex;"><a href="/bas/profile" style="color: black;"> профиль</a> <a href="/bas/basket" style="margin-left: 20px;color: black;"> Корзина</a> </label><?php }?>
+      <label style="margin-right:15%;font-size:20px;display:flex;">
+          <a href="/bas/profile" style="color: black;"> профиль</a>
+          <a href="/bas/basket" style="margin-left: 20px;color: black;"> Корзина</a>
+      </label><?php }?>
   </div>
 
   </div>

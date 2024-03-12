@@ -6,6 +6,7 @@ return[
     'email' => 'email',
     'number' => 'number',
     'avatar' => 'avatar',
+    'role' => 'role',
     'session_field' => 'user_id',
 
 ];

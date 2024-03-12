@@ -4,6 +4,7 @@ use App\Controllers\HomeController;
 use App\Controllers\AuthController;
 use App\Controllers\UserController;
 use App\Kernel\Router\Route;
+use App\Middleware\AdminMiddleware;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\GuestMiddleware;
 
@@ -13,9 +14,11 @@ return[
     Route::get('/bas/login', [AuthController::class, 'login'], [GuestMiddleware::class]),
     Route::post('/bas/log', [AuthController::class, 'log']),
 
-    Route::get('/bas/admin', [UserController::class, 'profile']),
+    Route::get('/bas/admin', [UserController::class, 'admin'],[AdminMiddleware::class]),
+    Route::get('/bas/admin/deleteUser/', [UserController::class, 'delUser'], [AdminMiddleware::class]),
+    Route::get('/bas/admin/deleteProd/', [UserController::class, 'deleteProd'], [AdminMiddleware::class]),
 
-    
+
     Route::post('/bas/post', [UserController::class, 'post']),
     Route::get('/bas/profile', [UserController::class, 'profile'], [AuthMiddleware::class]),
     Route::get('/bas/logout', [UserController::class, 'logout']),
@@ -34,5 +37,7 @@ return[
     Route::get('/bas/description/', [HomeController::class, 'description']),
     Route::get('/bas/basket/', [HomeController::class, 'basket']),
     Route::get('/bas/basket', [HomeController::class, 'basket2']),
+    Route::get('/bas/delBas/', [HomeController::class, 'delBas']),
     Route::get('/bas/buyFlow/', [HomeController::class, 'buyFlow']),
+    Route::get('/bas/buyFlowBas/', [HomeController::class, 'delBuyFlowBas']),
 ];

@@ -20,7 +20,15 @@ $view->component('start');
                 </p>
                 <div class="p_b">
                         <a href="/bas/buyFlow/" class="btn btn-outline-success" type="button" value="купить">купить </a>
+
                         <a href="/bas/basket/?id=<?php echo $product['id']?>" class="btn btn-outline-success" type="button" value="Подробнее">В корзину</a>
+                    <?php if ($session->has('error')) {?>
+                        <ul>
+                            <li>
+                                <?php echo $session->getFlash("error");  ?>
+                            </li>
+                        </ul>
+                    <?php } ?>
                 </div>
         </div>
 </div>

@@ -13,6 +13,37 @@ class UserController extends Controller
         $this->view('register');
 
     }
+
+    public function admin():void
+    {
+        $this->view('admin');
+
+    }
+
+    public function deleteProd():void
+    {
+        $prodId = $this->request()->input('id');
+        $this->db()->del('product',['id' => $prodId]);
+
+        header('location:/bas/admin');
+    }
+
+    public function delUser():void
+    {
+        $userId = $this->request()->input('id');
+        $this->db()->del('product',['user_id' => $userId]);
+        $this->db()->del('delivery',['user_id' => $userId]);
+        $this->db()->del('basket',['user_id' => $userId]);
+        if ($this->auth()->user()->id() == $userId){
+            $this->db()->del('user',['id' => $userId]);
+            $this->auth()->logout();
+            header('location:/bas/login');
+            die();
+        }
+        $this->db()->del('user',['id' => $userId]);
+
+        header('location:/bas/admin');
+    }
     
     public function deleteDel():void
     {
@@ -51,6 +82,9 @@ class UserController extends Controller
             'fPrice' => $this->request()->input('finP'),
             'dost' => $dost,
         ]);
+        if($this->db()->get('basket', ['product_id' => $this->request()->input('product_id')]) != null){
+            $this->db()->del('basket', ['product_id' => $this->request()->input('product_id')]);
+        }
         header("location:/bas/delivery");
     }
 

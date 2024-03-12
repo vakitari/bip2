@@ -19,6 +19,17 @@ class HomeController extends Controller
 
     }
 
+//    public function delBuyFlowBas(): void
+//    {
+//
+//        $this->db()->del('basket', ['id' => $this->request()->input('id')]);
+//
+//        header("location:/bas/basket");
+//
+//
+//    }
+
+
     public function description(): void
     {
         $product = $this->db()->first('product', [
@@ -38,17 +49,33 @@ class HomeController extends Controller
 
     }
 
+    public function delBas(): void
+    {
+        $this->db()->del('basket', ['id' => $this->request()->input('id')]);
+
+        header("location:/bas/basket");
+
+
+
+    }
+
     public function basket(): void
     {
-
+        $userId = $this->auth()->user()->id();
         $productId = $this->request()->input('id');
-        $userId = $this->auth()->user()->id(); 
+        if ($this->db()->first('basket', ['product_id' => $productId]) != null)
+        {
+            $this->session()->set('error', 'в карзине уже есть этот товар');
+            header("location:/bas/description/?id=$productId");
+            die();
+        }
+
         $this->db()->insert('basket', [
                 'product_id' => $productId,
                 'user_id' => $userId,
         ]);
 
-            $this->view('basket');
+        header("location:/bas/basket");
 
     }
     public function buyFlow(): void
